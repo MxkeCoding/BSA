@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer playerSprite;
     // 
     [SerializeField] private int stepsInGrass; // grass step 
+    [SerializeField] private LayerMask grassLayer; // grass layer
     
 
     private PlayerControls playerControls;
@@ -43,24 +44,30 @@ public class PlayerController : MonoBehaviour
         float x = playerControls.Player.Move.ReadValue<Vector2>().x;
         float z = playerControls.Player.Move.ReadValue<Vector2>().y;
 
-
         movement = new Vector3(x, 0, z).normalized;
 
-        anim.SetBool(IS_WALK_PARAM, movement!=Vector3.zero);
-
-        if (x!= 0 && x < 0)
+        // Send values to the Blend Tree
+        // If you aren't moving, keep the last movement values so she stays facing that way
+        if (movement != Vector3.zero) 
         {
-            playerSprite.flipX = true;
+            anim.SetFloat("moveX", x);
+            anim.SetFloat("moveY", z);
         }
 
-        if (x!= 0 && x > 0)
-        {
-            playerSprite.flipX = false;
-        }
+        anim.SetBool(IS_WALK_PARAM, movement != Vector3.zero);
+        
+        // REMOVE the playerSprite.flipX logic entirely!
     }
 
     private void FixedUpdate()
     {
         rb.MovePosition(transform.position + movement * speed * Time.deltaTime);
+
+        // checks if collides with grass
+        Collider[] colliders = Physics.OverlapSphere(transform.position,1,grassLayer);
+        movingInGrass = colliders.Length!=0 && movement !=Vector3.zero;
+
+
+
     }
 }
