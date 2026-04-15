@@ -20,7 +20,7 @@ public class CharacterManager : MonoBehaviour
     {
         playerControls = new PlayerControls();
     }
-    // Start is called before the first frame update
+    // Start is called before the first frame update testing
     void Start()
     {
         playerControls.Player.Interact.performed += _ => Interact();
