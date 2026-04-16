@@ -1278,6 +1278,7 @@ MonoBehaviour:
   - SubjectText: Speaki
     DialogueToPrint: UWAAAHHH
     LettersPerSecond: 15
+  interactPrompt: {fileID: 0}
 --- !u!1001 &453284575
 PrefabInstance:
   m_ObjectHideFlags: 0
