@@ -7,6 +7,7 @@ public class CharacterManager : MonoBehaviour
 {
     [SerializeField] private GameObject joinPopup;
     [SerializeField] private TextMeshProUGUI joinPopupText;
+    [SerializeField] private GameObject agustinIndicatorUI;
 
     private bool infrontOfPartyMember;
     private GameObject joinableMember;
@@ -24,7 +25,9 @@ public class CharacterManager : MonoBehaviour
     void Start()
     {
         playerControls.Player.Interact.performed += _ => Interact();
+        if (agustinIndicatorUI != null) agustinIndicatorUI.SetActive(false);
         SpawnOverworldMembers();
+        
     }
 
     private void OnEnable()
@@ -59,6 +62,12 @@ public class CharacterManager : MonoBehaviour
         // join pop up
         joinPopup.SetActive(true);
         joinPopupText.text = partyMember.MemberName + PARTY_JOINED_MESSAGE;
+
+        if (partyMember.MemberName == "Soldier") 
+        {
+            if (agustinIndicatorUI != null) agustinIndicatorUI.SetActive(true);
+        }
+
         SpawnOverworldMembers(); // adding an overworld member
     }
 
