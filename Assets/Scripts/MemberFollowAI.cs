@@ -57,7 +57,7 @@ public class MemberFollowAI : MonoBehaviour
             {
                 anim.SetBool(IS_WALK_PARAM, true);
 
-                // Manual damping for smooth turns
+                // Manual damping for smooth turns Dabesaba
                 float smoothedX = Mathf.MoveTowards(anim.GetFloat("moveX"), realDirection.x, 5f * Time.deltaTime);
                 float smoothedY = Mathf.MoveTowards(anim.GetFloat("moveY"), realDirection.z, 5f * Time.deltaTime);
                 anim.SetFloat("moveX", smoothedX);
