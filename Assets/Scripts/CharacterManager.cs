@@ -148,7 +148,6 @@ public class CharacterManager : MonoBehaviour
                 if (followerAI != null)
                 {
                     followerAI.enabled = true;
-                    followerAI.SetFollowDistance(spacing); // set follow ai settings
                     followerAI.SetFollowTarget(overworldCharacters[i - 1].transform);
                 }
                 overworldCharacters.Add(tempFollower); // add the follower visual to our list

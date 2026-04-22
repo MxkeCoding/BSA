@@ -116,6 +116,8 @@ public class PlayerController : MonoBehaviour
         }
         anim.SetBool(IS_WALK_PARAM, isMoving);
         anim.SetBool(IS_CROUCH_PARAM, isCrouching); 
+        bool actuallyRunning = isRunning && isMoving && !isCrouching && !isExhausted;
+        anim.SetBool("isRun", actuallyRunning);
     }
 
     private void FixedUpdate()

@@ -5,10 +5,11 @@ using UnityEngine;
 public class MemberFollowAI : MonoBehaviour
 {
     [SerializeField] private Transform followTarget;
-    [SerializeField] private int speed;
-    [SerializeField] private float minDistance = 1f;
-    [SerializeField] private float startDistance = 1.3f; // Distance to start walking
-    [SerializeField] private float stopDistance = 1f;  // Distance to stop and go idle
+    [Header("Speeds")]
+    [SerializeField] private float walkSpeed = 5f; // Match Sampaguita's walk speed
+    [SerializeField] private float runSpeed = 8f;  // Match Sampaguita's run speed
+    [SerializeField] private float startDistance = 1.5f; // Distance to start walking
+    [SerializeField] private float stopDistance = 1.5f;  // Distance to stop and go idle
     private bool isCurrentlyWalking = false;    
 
     private Animator anim;
@@ -31,6 +32,18 @@ public class MemberFollowAI : MonoBehaviour
     void FixedUpdate()
     {
         if (followTarget == null) return;
+        
+        Animator targetAnim = followTarget.GetComponentInChildren<Animator>();
+        if (targetAnim != null)
+        {
+            // Mimic Crouch
+            bool isTargetCrouching = targetAnim.GetBool("isCrouch");
+            anim.SetBool("isCrouch", isTargetCrouching);
+
+            // NEW: Mimic Run
+            bool isTargetRunning = targetAnim.GetBool("isRun");
+            anim.SetBool("isRun", isTargetRunning);
+        }
 
         float currentDist = Vector3.Distance(transform.position, followTarget.position);
 
@@ -47,7 +60,10 @@ public class MemberFollowAI : MonoBehaviour
         // 2. Execution of movement and animation
         if (isCurrentlyWalking)
         {
-            float step = speed * Time.deltaTime;
+            // NEW: Choose speed based on the animator state we just mimicked
+            float currentMoveSpeed = anim.GetBool("isRun") ? runSpeed : walkSpeed;
+            float step = currentMoveSpeed * Time.deltaTime;
+            
             Vector3 lastPos = transform.position;
             transform.position = Vector3.MoveTowards(transform.position, followTarget.position, step);
 
@@ -71,7 +87,12 @@ public class MemberFollowAI : MonoBehaviour
     }
     public void SetFollowDistance(float followDistance)
     {
-        minDistance = followDistance;
+        // We update the stop distance to match your spacing
+        stopDistance = followDistance;
+
+        // We set startDistance slightly higher (like 0.3 more) 
+        // This prevents "jittering" where the AI starts and stops constantly.
+        startDistance = followDistance;
     }
 
     public void SetFollowTarget(Transform target)
