@@ -15,13 +15,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxStamina = 100f;
     [SerializeField] private float drainRate = 25f;  
     [SerializeField] private float regenRate = 15f; 
+    [SerializeField] private float recoveryThreshold = 20f;
+    [SerializeField] private Color normalColor = new Color(0.6f, 0.7f, 1f); 
+    [SerializeField] private Color exhaustedColor = Color.red;
     private float currentStamina;
+    private bool isExhausted;
     
     [Header("Visuals")]
     [SerializeField] private Animator anim;
     [SerializeField] private SpriteRenderer playerSprite;
-
-
 
     private PlayerControls playerControls;
     private Rigidbody rb;
@@ -67,14 +69,20 @@ public class PlayerController : MonoBehaviour
 
         float x = playerControls.Player.Move.ReadValue<Vector2>().x;
         float z = playerControls.Player.Move.ReadValue<Vector2>().y;
+
+        // crouch
         bool isCrouching = playerControls.Player.Crouch.IsPressed();
-        bool isRunning = playerControls.Player.Run.IsPressed(); // Run action in contttroller
-        
+        // run
+        bool isRunning = playerControls.Player.Run.IsPressed(); 
         movement = new Vector3(x, 0, z).normalized;
         bool isMoving = movement != Vector3.zero;
 
+        // Handle Exhaustion State
+        if (currentStamina <= 0) isExhausted = true;
+        if (isExhausted && currentStamina >= recoveryThreshold) isExhausted = false;
+
         // stamina logic
-        if (isRunning && isMoving && !isCrouching && currentStamina > 0)
+        if (isRunning && isMoving && !isCrouching && currentStamina > 0 && !isExhausted)
         {
             currentSpeed = runSpeed;
             currentStamina -= drainRate * Time.deltaTime;
@@ -96,6 +104,9 @@ public class PlayerController : MonoBehaviour
         if (staminaBarImage != null)
         {
             staminaBarImage.fillAmount = staminaRatio;
+            
+            // Toggle between your chosen colors
+            staminaBarImage.color = isExhausted ? exhaustedColor : normalColor;
         }
 
         if (movement != Vector3.zero) 
@@ -107,11 +118,9 @@ public class PlayerController : MonoBehaviour
         anim.SetBool(IS_CROUCH_PARAM, isCrouching); 
     }
 
-
     private void FixedUpdate()
     {
         rb.MovePosition(transform.position + movement * currentSpeed * Time.deltaTime);
-        
     }
 
     public void SetOverworldVisuals(Animator animator, SpriteRenderer spriteRenderer, Vector3 scale)
