@@ -16,10 +16,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float drainRate = 25f;  
     [SerializeField] private float regenRate = 15f; 
     [SerializeField] private float recoveryThreshold = 20f;
-    [SerializeField] private Color normalColor = new Color(0.6f, 0.7f, 1f); 
+    [SerializeField] private Color normalColor = new Color(0.6f, 0.7f, 1f); // Your blue color
     [SerializeField] private Color exhaustedColor = Color.red;
     private float currentStamina;
     private bool isExhausted;
+
+    [Header("Health Settings")]
+    [SerializeField] private Image healthBarImage; //  HP im
+    [SerializeField] private float maxHealth = 100f;
+    private float currentHealth;
     
     [Header("Visuals")]
     [SerializeField] private Animator anim;
@@ -55,6 +60,9 @@ public class PlayerController : MonoBehaviour
 
         // stamina
         currentStamina = maxStamina;
+
+        // health
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -98,15 +106,19 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        // Clamp and update stamina UI
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-
-        float staminaRatio = currentStamina / maxStamina;
         if (staminaBarImage != null)
         {
-            staminaBarImage.fillAmount = staminaRatio;
-            
-            // Toggle between your chosen colors
+            staminaBarImage.fillAmount = currentStamina / maxStamina;
             staminaBarImage.color = isExhausted ? exhaustedColor : normalColor;
+        }
+
+        // Update health UI
+        if (healthBarImage != null)
+        {
+            // Health ratio = current / max
+            healthBarImage.fillAmount = currentHealth / maxHealth;
         }
 
         if (movement != Vector3.zero) 
@@ -116,13 +128,24 @@ public class PlayerController : MonoBehaviour
         }
         anim.SetBool(IS_WALK_PARAM, isMoving);
         anim.SetBool(IS_CROUCH_PARAM, isCrouching); 
-        bool actuallyRunning = isRunning && isMoving && !isCrouching && !isExhausted;
-        anim.SetBool("isRun", actuallyRunning);
     }
 
     private void FixedUpdate()
     {
         rb.MovePosition(transform.position + movement * currentSpeed * Time.deltaTime);
+    }
+
+    // New function to handle damage
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        
+        if (currentHealth <= 0)
+        {
+            Debug.Log("Player has died!");
+            // player deth logic here later
+        }
     }
 
     public void SetOverworldVisuals(Animator animator, SpriteRenderer spriteRenderer, Vector3 scale)
