@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private SpriteRenderer playerSprite;
 
+    [Header("Stealth")]
+    public bool isHidden = false;
+
     private PlayerControls playerControls;
     private Rigidbody rb;
     private Vector3 movement;
