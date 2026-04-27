@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip[] damageSoundClip;
 
 
-
     [Header("Stealth")]
     public bool isHidden = false;
 
@@ -45,6 +44,10 @@ public class PlayerController : MonoBehaviour
     
     private const string IS_WALK_PARAM = "isWalk";
     private const string IS_CROUCH_PARAM = "isCrouch"; 
+
+    [Header("Portrait Settings")]
+    [SerializeField] private Animator portraitAnim;
+    [SerializeField] private float hurtThreshold = 40f; 
 
     private void Awake()
     {
@@ -136,6 +139,23 @@ public class PlayerController : MonoBehaviour
         }
         anim.SetBool(IS_WALK_PARAM, isMoving);
         anim.SetBool(IS_CROUCH_PARAM, isCrouching); 
+
+        // portrait logic
+        if (portraitAnim != null)
+        {
+            // 1. Check Dead
+            bool dead = currentHealth <= 0;
+            portraitAnim.SetBool("isDead", dead);
+
+            // 2. Check Hurt 
+            bool hurt = currentHealth <= hurtThreshold && !dead;
+            portraitAnim.SetBool("isHurt", hurt);
+
+            // 3. Check Tired 
+            // Only show tired if not hurt or dead
+            bool tired = isExhausted && !hurt && !dead; 
+            portraitAnim.SetBool("isTired", tired);
+        }
     }
 
     private void FixedUpdate()
