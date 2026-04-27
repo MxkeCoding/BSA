@@ -8737,7 +8737,7 @@ MonoBehaviour:
   crouchSpeed: 0
   runSpeed: 8
   staminaBarImage: {fileID: 581848162}
-  maxStamina: 500
+  maxStamina: 100
   drainRate: 30
   regenRate: 5
   recoveryThreshold: 20
@@ -8751,6 +8751,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9d4abd9f2efffaf499b6a6766492d710, type: 3}
   - {fileID: 8300000, guid: fc0343b632790c1489e9dd7d628d5c94, type: 3}
   isHidden: 0
+  portraitAnim: {fileID: 0}
+  hurtThreshold: 40
 --- !u!4 &752225669
 Transform:
   m_ObjectHideFlags: 0
@@ -13411,6 +13413,34 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 772af6d1c1a369e47862dbdf6f214135, type: 3}
+--- !u!1 &1947877894 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1849630999542736239, guid: 3d920b646cc582b45be0b8735e581b9e,
+    type: 3}
+  m_PrefabInstance: {fileID: 7789377051018333029}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1947877898
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947877894}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5541ffe9dfdc46944906e691d7c5df64, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1967616259
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14189,6 +14219,11 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4590696840370605881, guid: 3d920b646cc582b45be0b8735e581b9e,
+        type: 3}
+      propertyPath: m_Name
+      value: Player Portrait
+      objectReference: {fileID: 0}
     - target: {fileID: 5803777460406703283, guid: 3d920b646cc582b45be0b8735e581b9e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -14245,7 +14280,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1849630999542736239, guid: 3d920b646cc582b45be0b8735e581b9e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1947877898}
   m_SourcePrefab: {fileID: 100100000, guid: 3d920b646cc582b45be0b8735e581b9e, type: 3}
 --- !u!1001 &9102456905888948081
 PrefabInstance:
