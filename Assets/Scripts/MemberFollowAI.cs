@@ -36,6 +36,15 @@ public class MemberFollowAI : MonoBehaviour
         Animator targetAnim = followTarget.GetComponentInChildren<Animator>();
         if (targetAnim != null)
         {
+            bool isTargetDead = targetAnim.GetBool("isDead"); // Check for death
+        
+            if (isTargetDead) //IF DEAD
+            {
+                anim.SetBool(IS_WALK_PARAM, false);
+                isCurrentlyWalking = false;
+                return; 
+            }
+
             // Mimic Crouch
             bool isTargetCrouching = targetAnim.GetBool("isCrouch");
             anim.SetBool("isCrouch", isTargetCrouching);

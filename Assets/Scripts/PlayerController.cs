@@ -50,6 +50,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator portraitAnim;
     [SerializeField] private float hurtThreshold = 40f; 
 
+    [Header("Game Over")]
+    [SerializeField] private GameObject gameOverPanel;
+
+
+
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -168,18 +173,34 @@ public class PlayerController : MonoBehaviour
     // function to handle damage
     public void TakeDamage(float damage)
     {
+        if (currentHealth <= 0) return; // Already dead, don't take more damage
+
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
-        // damage sfx
-        // SoundFXManager.instance.PlaySoundFXClip(damageSoundClip, transform, 1f);
         SoundFXManager.instance.PlayRandomSoundFXClip(damageSoundClip, transform, 0.2f);
-       
-        
+    
         if (currentHealth <= 0)
         {
-            Debug.Log("Player has died!");
-            // player deth logic here later
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player has died!");
+        
+        // 1. Stop movement
+        movement = Vector3.zero;
+        rb.velocity = Vector3.zero;
+        playerControls.Disable(); // Freeze inputs
+
+        // 2. Trigger Death Animation
+        anim.SetBool("isDead", true); 
+        
+        // 3. Show UI
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
         }
     }
 
