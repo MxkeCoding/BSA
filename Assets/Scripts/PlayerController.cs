@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float drainRate = 25f;  
     [SerializeField] private float regenRate = 15f; 
     [SerializeField] private float recoveryThreshold = 20f;
-    [SerializeField] private Color normalColor = new Color(0.6f, 0.7f, 1f); // Your blue color
+    [SerializeField] private Color normalColor;
     [SerializeField] private Color exhaustedColor = Color.red;
     private float currentStamina;
     private bool isExhausted;
@@ -80,6 +80,11 @@ public class PlayerController : MonoBehaviour
 
         // health
         currentHealth = maxHealth;
+
+        if (staminaBarImage != null)
+        {
+            normalColor = staminaBarImage.color;
+        }
     }
 
     void Update()
