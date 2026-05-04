@@ -49,7 +49,7 @@ public class MemberFollowAI : MonoBehaviour
             bool isTargetCrouching = targetAnim.GetBool("isCrouch");
             anim.SetBool("isCrouch", isTargetCrouching);
 
-            // NEW: Mimic Run
+            // Mimic Run
             bool isTargetRunning = targetAnim.GetBool("isRun");
             anim.SetBool("isRun", isTargetRunning);
         }
@@ -69,7 +69,6 @@ public class MemberFollowAI : MonoBehaviour
         // 2. Execution of movement and animation
         if (isCurrentlyWalking)
         {
-            // NEW: Choose speed based on the animator state we just mimicked
             float currentMoveSpeed = anim.GetBool("isRun") ? runSpeed : walkSpeed;
             float step = currentMoveSpeed * Time.deltaTime;
             
@@ -96,11 +95,8 @@ public class MemberFollowAI : MonoBehaviour
     }
     public void SetFollowDistance(float followDistance)
     {
-        // We update the stop distance to match your spacing
         stopDistance = followDistance;
 
-        // We set startDistance slightly higher (like 0.3 more) 
-        // This prevents "jittering" where the AI starts and stops constantly.
         startDistance = followDistance;
     }
 

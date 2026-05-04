@@ -10,13 +10,13 @@ public class UIHover : MonoBehaviour
 
     void Start()
     {
-        // Remember exactly where you placed it in the Canvas
+        //  where you placed it in the Canvas
         startPos = transform.localPosition;
     }
 
     void Update()
     {
-        // Use a Sine wave to smoothly move the Y position up and down over time
+        // Sine wave 
         float newY = startPos.y + Mathf.Sin(Time.time * hoverSpeed) * hoverAmount;
         transform.localPosition = new Vector3(startPos.x, newY, startPos.z);
     }
