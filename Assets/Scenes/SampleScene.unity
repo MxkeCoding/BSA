@@ -8532,7 +8532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   QTE: {fileID: 1918869333}
-  difficultyLevel: 2
+  difficultyLevel: 1
 --- !u!23 &663556165
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15619,6 +15619,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1067330281705410379, guid: 3d920b646cc582b45be0b8735e581b9e,
+        type: 3}
+      propertyPath: 'CursorSpeedByDifficulty.Array.data[0]'
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 1067330281705410379, guid: 3d920b646cc582b45be0b8735e581b9e,
+        type: 3}
+      propertyPath: 'CursorSpeedByDifficulty.Array.data[1]'
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 1077840626271300814, guid: 3d920b646cc582b45be0b8735e581b9e,
         type: 3}
       propertyPath: m_LocalPosition.x
