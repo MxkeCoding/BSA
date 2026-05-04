@@ -11285,7 +11285,7 @@ PrefabInstance:
     - target: {fileID: 2078587092824356503, guid: 735efe1eb74c6fa40b2ec50eb352880e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3357896882558717014, guid: 735efe1eb74c6fa40b2ec50eb352880e,
         type: 3}
@@ -11385,7 +11385,7 @@ PrefabInstance:
     - target: {fileID: 3357896882558717014, guid: 735efe1eb74c6fa40b2ec50eb352880e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 220.69727
+      value: 195
       objectReference: {fileID: 0}
     - target: {fileID: 3357896882558717014, guid: 735efe1eb74c6fa40b2ec50eb352880e,
         type: 3}
@@ -11400,6 +11400,33 @@ PrefabInstance:
     - target: {fileID: 3357896882558717014, guid: 735efe1eb74c6fa40b2ec50eb352880e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3866061871021942402, guid: 735efe1eb74c6fa40b2ec50eb352880e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -97
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523351230341568590, guid: 735efe1eb74c6fa40b2ec50eb352880e,
+        type: 3}
+      propertyPath: m_text
+      value: Nice
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523351230341568590, guid: 735efe1eb74c6fa40b2ec50eb352880e,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 610deb523addde8419d3c9760e5d1944,
+        type: 2}
+    - target: {fileID: 5523351230341568590, guid: 735efe1eb74c6fa40b2ec50eb352880e,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2264789455226349578, guid: 610deb523addde8419d3c9760e5d1944,
+        type: 2}
+    - target: {fileID: 5523351230341568590, guid: 735efe1eb74c6fa40b2ec50eb352880e,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
