@@ -2294,7 +2294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSanity: 100
   currentSanity: 0
-  sanityDrainRate: 20
+  sanityDrainRate: 2
   flowerUI: {fileID: 169915678}
   flowerFrames:
   - {fileID: -974345907, guid: 2fab0a31b189b4c48a69a8a430d1bb6a, type: 3}
@@ -15706,6 +15706,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1067330281705410379, guid: 3d920b646cc582b45be0b8735e581b9e,
         type: 3}
+      propertyPath: hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f7b0a04c2e81be047aac9040c8260e4f, type: 3}
+    - target: {fileID: 1067330281705410379, guid: 3d920b646cc582b45be0b8735e581b9e,
+        type: 3}
+      propertyPath: requiredHitsToWin
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1067330281705410379, guid: 3d920b646cc582b45be0b8735e581b9e,
+        type: 3}
       propertyPath: 'CursorSpeedByDifficulty.Array.data[0]'
       value: 150
       objectReference: {fileID: 0}
@@ -15713,6 +15723,11 @@ PrefabInstance:
         type: 3}
       propertyPath: 'CursorSpeedByDifficulty.Array.data[1]'
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1067330281705410379, guid: 3d920b646cc582b45be0b8735e581b9e,
+        type: 3}
+      propertyPath: 'CursorSpeedByDifficulty.Array.data[2]'
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 1077840626271300814, guid: 3d920b646cc582b45be0b8735e581b9e,
         type: 3}

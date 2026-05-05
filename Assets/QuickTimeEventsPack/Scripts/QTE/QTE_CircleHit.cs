@@ -9,7 +9,11 @@ namespace QTEPack
     {
         [Header("DBD Style Settings")]
         [Tooltip("How many consecutive hits are needed to pass the QTE?")]
-        [SerializeField] private int requiredHitsToWin = 3; 
+        [SerializeField] private int requiredHitsToWin = 6; 
+        
+        // NEW: Sound slots!
+        [SerializeField] private AudioClip hitSound; 
+        [SerializeField] private AudioClip failSound; 
 
         [Header("Original Settings")]
         [SerializeField] private float[] HitAreaScaleByDifficulty;
@@ -24,7 +28,8 @@ namespace QTEPack
         private float maxCursorRotToWin;
         private QTEHitResult done;
 
-        // NEW: Variables to track our DBD mechanics
+        // Variables to track our DBD mechanics
+        private int baseDifficulty; 
         private int currentDifficulty;
         private int currentSuccessfulHits;
         private float moveDirection; 
@@ -33,14 +38,12 @@ namespace QTEPack
         {
             base.ShowQTE(position, scale, difficulty);
 
-            // Save difficulty to generate new hit areas later
+            baseDifficulty = difficulty;
             currentDifficulty = difficulty;
             
-            // Reset our hit tracker and set direction to clockwise (1f)
             currentSuccessfulHits = 0;
             moveDirection = 1f; 
 
-            // Generate the very first hit area
             GenerateNewHitArea();
 
             done = QTEHitResult.Playing;
@@ -48,12 +51,10 @@ namespace QTEPack
             StartCoroutine(RunQTE(difficulty));
         }
 
-        // NEW: A helper function that moves the target safely without ending the game
         private void GenerateNewHitArea()
         {
             hitAreaImage.fillAmount = HitAreaScaleByDifficulty[currentDifficulty];
             
-            // Randomize the new location on the circle
             hitAreaRotationZ = Random.Range(0, 360);
             hitAreaImage.rectTransform.rotation = Quaternion.Euler(0, 0, hitAreaRotationZ);
 
@@ -66,14 +67,13 @@ namespace QTEPack
 
         public IEnumerator RunQTE(int difficulty)
         {
-            float speed = CursorSpeedByDifficulty[difficulty];
             cursorRotationZ = 0;
 
             while (done == QTEHitResult.Playing)
             {
-                // NEW: We multiply the speed by our moveDirection so it can spin backwards!
+                float speed = CursorSpeedByDifficulty[currentDifficulty];
+                
                 cursorRotationZ -= FixedSpeed(speed) * moveDirection;
-
                 cursor.rotation = Quaternion.Euler(0, 0, cursorRotationZ);
 
                 yield return new WaitForEndOfFrame();
@@ -95,7 +95,6 @@ namespace QTEPack
         {
             if (done == QTEHitResult.Playing)
             {
-                // FIXED: Changed to GetMouseButtonDown so holding the button doesn't cheat the system
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) 
                 {
                     var normalizedCursorZ = cursorRotationZ % 360;
@@ -105,24 +104,43 @@ namespace QTEPack
 
                     if (checkA || checkB)
                     {
-                        // They hit the sweet spot! 
+                        // NEW: Play the success sound using your SoundFXManager!
+                        if (hitSound != null && SoundFXManager.instance != null)
+                        {
+                            SoundFXManager.instance.PlaySoundFXClip(hitSound, transform, 0.8f);
+                        }
+
                         currentSuccessfulHits++;
                         
                         if (currentSuccessfulHits >= requiredHitsToWin)
                         {
-                            // If they reached the required amount of hits, they win.
                             done = QTEHitResult.Win;
                         }
                         else
                         {
-                            // REVERSE AND RELOCATE!
-                            moveDirection *= -1f; // Flips between 1 and -1
+                            int hitsRemaining = requiredHitsToWin - currentSuccessfulHits;
+
+                            if (hitsRemaining == 2)
+                            {
+                                currentDifficulty = Mathf.Clamp(baseDifficulty + 1, 0, 4);
+                            }
+                            else if (hitsRemaining == 1)
+                            {
+                                currentDifficulty = Mathf.Clamp(baseDifficulty + 2, 0, 4);
+                            }
+
+                            moveDirection *= -1f; 
                             GenerateNewHitArea();
                         }
                     }
                     else
                     {
-                        // They missed! Instant fail.
+                        // NEW: Play the fail sound!
+                        if (failSound != null && SoundFXManager.instance != null)
+                        {
+                            SoundFXManager.instance.PlaySoundFXClip(failSound, transform, 0.8f);
+                        }
+                        
                         done = QTEHitResult.Fail;
                     }
                 }
