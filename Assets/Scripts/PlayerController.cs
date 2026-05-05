@@ -24,7 +24,11 @@ public class PlayerController : MonoBehaviour
     [Header("Health Settings")]
     [SerializeField] private Image healthBarImage; //  HP im
     [SerializeField] private float maxHealth = 100f;
-    private float currentHealth;
+    public float currentHealth { get; private set; }
+
+    [Header("Damage Flash")]
+    [SerializeField] private Image damageVignetteImage;
+    [SerializeField] private float flashDuration = 0.5f;
     
     [Header("Visuals")]
     [SerializeField] private Animator anim;
@@ -170,6 +174,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void SetPanicPortrait(bool isPanicking)
+    {
+        if (portraitAnim != null)
+        {
+            portraitAnim.SetBool("isPanicking", isPanicking);
+        }
+    }
+
     private void FixedUpdate()
     {
         rb.MovePosition(transform.position + movement * currentSpeed * Time.deltaTime);
@@ -178,12 +190,20 @@ public class PlayerController : MonoBehaviour
     // function to handle damage
     public void TakeDamage(float damage)
     {
-        if (currentHealth <= 0) return; // Already dead, don't take more damage
+        if (currentHealth <= 0) return; 
 
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        if (healthBarImage != null)
+        {
+            healthBarImage.fillAmount = currentHealth / maxHealth;
+        }
+
         SoundFXManager.instance.PlayRandomSoundFXClip(damageSoundClip, transform, 0.2f);
     
+        if (damageVignetteImage != null) StartCoroutine(DamageFlash());
+
         if (currentHealth <= 0)
         {
             Die();
@@ -207,6 +227,29 @@ public class PlayerController : MonoBehaviour
         {
             gameOverPanel.SetActive(true);
         }
+    }
+
+
+
+    private IEnumerator DamageFlash()
+    {
+        Color flashColor = damageVignetteImage.color;
+        flashColor.a = 0.5f; 
+        damageVignetteImage.color = flashColor;
+
+        float timer = 0f;
+        while (timer < flashDuration)
+        {
+            timer += Time.deltaTime;
+            
+            flashColor.a = Mathf.Lerp(0.5f, 0f, timer / flashDuration);
+            damageVignetteImage.color = flashColor;
+            
+            yield return null;
+        }
+
+        flashColor.a = 0f;
+        damageVignetteImage.color = flashColor;
     }
 
     public void SetOverworldVisuals(Animator animator, SpriteRenderer spriteRenderer, Vector3 scale)
