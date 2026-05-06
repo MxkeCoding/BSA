@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/Military camp.unity
+    path: Assets/Scenes/Scene 2/Military camp.unity
     guid: 8557086788b5a764f937ea713f4d7bff
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

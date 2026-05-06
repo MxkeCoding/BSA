@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.24154864, g: 0.42543942, b: 0.5019181, a: 1}
+  m_IndirectSpecularColor: {r: 0.24151504, g: 0.42540464, b: 0.5018809, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7249,7 +7249,7 @@ PrefabInstance:
     - target: {fileID: 8995620617788380247, guid: fb4e59c5d05d7934999dafd8fb83a536,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.26
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 8995620617788380247, guid: fb4e59c5d05d7934999dafd8fb83a536,
         type: 3}
@@ -7259,22 +7259,22 @@ PrefabInstance:
     - target: {fileID: 8995620617788380247, guid: fb4e59c5d05d7934999dafd8fb83a536,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7236489
+      value: 0.5511297
       objectReference: {fileID: 0}
     - target: {fileID: 8995620617788380247, guid: fb4e59c5d05d7934999dafd8fb83a536,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.44726336
       objectReference: {fileID: 0}
     - target: {fileID: 8995620617788380247, guid: fb4e59c5d05d7934999dafd8fb83a536,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6901684
+      value: -0.52563095
       objectReference: {fileID: 0}
     - target: {fileID: 8995620617788380247, guid: fb4e59c5d05d7934999dafd8fb83a536,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.4689603
       objectReference: {fileID: 0}
     - target: {fileID: 8995620617788380247, guid: fb4e59c5d05d7934999dafd8fb83a536,
         type: 3}
@@ -7289,7 +7289,7 @@ PrefabInstance:
     - target: {fileID: 8995620617788380247, guid: fb4e59c5d05d7934999dafd8fb83a536,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 80.789
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7550,6 +7550,8 @@ MonoBehaviour:
   exhaustedColor: {r: 1, g: 0, b: 0, a: 1}
   healthBarImage: {fileID: 0}
   maxHealth: 100
+  damageVignetteImage: {fileID: 0}
+  flashDuration: 0.5
   anim: {fileID: 0}
   playerSprite: {fileID: 0}
   damageSoundClip: []
